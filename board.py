@@ -29,36 +29,19 @@ def print_board(board: dict) -> None:
 # is there a better way to do this lmao
 # RETURNS: (x, y) as strings in a tuple
 def get_x_y_from_spot(spot: str) -> tuple:
-    x = y = ''
-    if spot == '7':
-        x = '0'
-        y = '0'
-    elif spot == '8':
-        x = '0'
-        y = '1'
-    elif spot == '9':
-        x = '0'
-        y = '2'
-    elif spot == '4':
-        x = '1'
-        y = '0'
-    elif spot == '5':
-        x = '1'
-        y = '1'
-    elif spot == '6':
-        x = '1'
-        y = '2'
-    elif spot == '1':
-        x = '2'
-        y = '0'
-    elif spot == '2':
-        x = '2'
-        y = '1'
-    elif spot == '3':
-        x = '2'
-        y = '2'
-
-    return x, y
+    index_x_y_dict = {
+        '7': ('0', '0'),
+        '8': ('0', '1'), 
+        '9': ('0', '2'),
+        '4': ('1', '0'),
+        '5': ('1', '1'), 
+        '6': ('1', '2'),
+        '1': ('2', '0'),
+        '2': ('2', '1'), 
+        '3': ('2', '2'),
+    }
+    
+    return index_x_y_dict[spot]
 
 # RETURNS bool. returns if input is between 1-9 inclusive
 def is_spot_valid(tile_spot: int) -> bool:
