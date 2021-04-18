@@ -3,6 +3,7 @@ import json
 
 # This file holds the methods used to call the APIs provided to me
 
+# server runs locally
 base_url = "http://127.0.0.1:5000"
 
 # calls GET /key

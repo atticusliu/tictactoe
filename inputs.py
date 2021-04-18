@@ -8,7 +8,7 @@ def print_game_start_text() -> None:
     print("\n\n")
 
 
-# make sure that user input is either 1 or 2
+# verifies user input can be cast to int 
 # RETURNS: True if valid input, False if otherwise
 def is_user_input_valid_ints(user_input: str) -> int:
     try:
@@ -35,8 +35,8 @@ def get_user_input_game_type() -> int:
     while True:
         value = input(prompt)
 
-        if is_user_input_valid_ints(value):
-            return int(value) == 1 or int(value) == 2
+        if is_user_input_valid_ints(value) and (int(value) == 1 or int(value) == 2):
+            return int(value)
         print(on_validation_error)
 
 # handle game outcome
