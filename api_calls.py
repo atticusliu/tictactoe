@@ -12,6 +12,7 @@ echo_auth_str = echo_str + "/auth"
 game_str = "/game"
 game_str_back = "/game/"
 move_str = "/move"
+user_friendly_error_message = "Can't connect to server. Sorry. Check back later."
 
 # calls GET /key
 # RETURNS: API key string or something failure-related
@@ -20,7 +21,7 @@ def get_api_key() -> str:
     try:
         api_key = requests.get(base_url + key_str)
     except:
-        raise SystemExit("Can't connect to server. Sorry. Check back later.")
+        raise SystemExit(user_friendly_error_message)
 
     return api_key
 
@@ -32,7 +33,7 @@ def get_echo(api_key: str) -> str:
     try:
         echo_response = requests.get(base_url + echo_str, headers=headers)
     except:
-        raise SystemExit("Can't connect to server. Sorry. Check back later.")
+        raise SystemExit(user_friendly_error_message)
 
     return echo_response
 
@@ -45,7 +46,7 @@ def get_echo_auth(api_key: str) -> str:
     try:
         echo_auth_response = requests.get(base_url + echo_auth_str, headers=headers)
     except:
-        raise SystemExit("Can't connect to server. Sorry. Check back later.")
+        raise SystemExit(user_friendly_error_message)
 
     return echo_auth_response
 
@@ -57,7 +58,7 @@ def post_game_create(api_key: str) -> json:
     try: 
         game_create_response = requests.post(base_url + game_str, headers=headers)
     except:
-        raise SystemExit("Can't connect to server. Sorry. Check back later.")
+        raise SystemExit(user_friendly_error_message)
 
     return game_create_response
 
@@ -69,7 +70,7 @@ def get_game(api_key: str, game_id: str) -> json:
     try:
         get_game_response = requests.get(base_url + game_str_back + game_id, headers=headers)
     except:
-        raise SystemExit("Can't connect to server. Sorry. Check back later.")
+        raise SystemExit(user_friendly_error_message)
     
     return get_game_response
 
@@ -83,6 +84,6 @@ def make_move(api_key: str, game_id: str, x: str, y: str, tile:str) -> json:
     try:
         put_game_move_response = requests.put(base_url + game_str_back + game_id+ move_str + url_query_string, headers=headers)
     except:
-        raise SystemExit("Can't connect to server. Sorry. Check back later.")
+        raise SystemExit(user_friendly_error_message)
     
     return put_game_move_response
