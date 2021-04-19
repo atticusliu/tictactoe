@@ -56,6 +56,10 @@ def get_user_input_game_type() -> int:
             return int(value)
         print(on_validation_error)
 
+# RETURNS player's move
+def player_move() -> str:
+    return input("It is your (X)'s turn. Make a move: Enter 1-9 (inclusive): ")
+    
 # handle game outcome
 # RETURNS: None
 def print_game_winner(status: str, winner: str) -> None:

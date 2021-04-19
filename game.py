@@ -40,7 +40,7 @@ def start_game() -> None:
 
         # get move from whoever's turn it is
         if current_tile_turn == player_tile:
-            current_move_tile = player_move()
+            current_move_tile = inputs.player_move()
         else:
             current_move_tile = bot.get_best_bot_move(board_dict)
 
@@ -69,10 +69,6 @@ def start_game() -> None:
     # end of game, print the winner, prompt game restart
     inputs.print_game_winner(status, winner)
     inputs.prompt_restart()
-
-# RETURNS player's move
-def player_move() -> str:
-    return input("It is your (X)'s turn. Make a move: Enter 1-9 (inclusive): ")
 
 # update whose turn
 # RETURNS: 'X' or 'O' as strings
