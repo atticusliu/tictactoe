@@ -27,7 +27,7 @@ def print_game_start_text() -> None:
 
 # verifies user input can be cast to int 
 # RETURNS: True if valid input, False if otherwise
-def is_user_input_valid_ints(user_input: str) -> int:
+def is_user_input_valid_ints(user_input: str) -> bool:
     try:
         user_input = int(user_input)
     except ValueError:
@@ -59,7 +59,7 @@ def get_user_input_game_type() -> int:
 # RETURNS player's move
 def player_move() -> str:
     return input("It is your (X)'s turn. Make a move: Enter 1-9 (inclusive): ")
-    
+
 # handle game outcome
 # RETURNS: None
 def print_game_winner(status: str, winner: str) -> None:
