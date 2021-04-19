@@ -51,7 +51,7 @@ def print_board(board: dict) -> None:
     print(board['1'] + '|' + board['2'] + '|' + board['3'])
 
 # RETURNS: (x, y) as strings in a tuple
-def get_x_y_from_spot(spot: str) -> tuple:
+def get_x_y_from_tile(tile: str) -> tuple:
     index_x_y_dict = {
         '7': ('0', '0'),
         '8': ('0', '1'), 
@@ -64,14 +64,14 @@ def get_x_y_from_spot(spot: str) -> tuple:
         '3': ('2', '2'),
     }
     
-    return index_x_y_dict[spot]
+    return index_x_y_dict[tile]
 
 # RETURNS if space is free
-def is_space_free(board_dict, tile_spot: str) -> bool:
-    if board_dict[tile_spot] == ' ':
+def is_space_free(board_dict, tile: str) -> bool:
+    if board_dict[tile] == ' ':
         return True
     return False
 
 # RETURNS if input is between 1-9 inclusive
-def is_spot_valid(tile_spot: int) -> bool:
-    return tile_spot >= 1 and tile_spot <= 9
+def is_tile_valid(tile: int) -> bool:
+    return tile >= 1 and tile <= 9

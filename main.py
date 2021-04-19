@@ -5,7 +5,12 @@ import api_calls
 import auth
 import board
 import inputs
-import computer_logic
+import bot
+
+# some globals
+bot_tile = 'O'
+player_tile = 'X'
+empty_tile = ' '
 
 # This file holds the guts of the program
 
@@ -23,7 +28,7 @@ def start_game() -> None:
     # new game status is NONE, but I'm gonna overwrite it to "Active". Initialize winner, start game with X (player)
     status = 'ACTIVE'
     winner = ''
-    current_tile_turn = computer_logic.player_tile
+    current_tile_turn = player_tile
 
     # print text, board before start of game
     inputs.print_game_start_text()
@@ -32,46 +37,39 @@ def start_game() -> None:
     # use game status
     while status == 'ACTIVE':
         # initialize
-        current_move_spot = ''
+        current_move_tile = ''
 
         # get move from whoever's turn it is
-        if current_tile_turn == computer_logic.player_tile:
-            current_move_spot = player_move()
+        if current_tile_turn == player_tile:
+            current_move_tile = player_move()
         else:
-            current_move_spot = computer_logic.central_computer_logic_move(board_dict)
+            current_move_tile = bot.get_best_bot_move(board_dict)
 
         # sanitize user input and skip iteration ad hoc
-        # TODO: re-evaluate this logic. Only needs to be run for player input
-        if not inputs.is_user_input_valid_ints(current_move_spot) or not board.is_spot_valid(int(current_move_spot)):
+        if not inputs.is_user_input_valid_ints(current_move_tile) or not board.is_tile_valid(int(current_move_tile)):
             print("Invalid input. Please try again.")
             continue
-        elif not board.is_space_free(board_dict, current_move_spot):
-            print("Spot has been taken. Please try again.")
+        elif not board.is_space_free(board_dict, current_move_tile):
+            print("Tile has been taken. Please try again.")
             continue
-        # space is free
         else:
-            board_dict[current_move_spot] = current_tile_turn
+            board_dict[current_move_tile] = current_tile_turn
 
-            x, y = board.get_x_y_from_spot(current_move_spot)
+            x, y = board.get_x_y_from_tile(current_move_tile)
             make_move_response = api_calls.make_move(api_key, game_id, x, y, current_tile_turn).json()
             # update things after each successful move
             winner = make_move_response['winner']
             status = make_move_response['status']
         
         # show board, update turn
-        if current_tile_turn == computer_logic.comp_tile:
-            print("Computer (O) has made a move to tile " + current_move_spot + ".")
+        if current_tile_turn == bot_tile:
+            print("Bot (O) has made a move to tile " + current_move_tile + ".")
         board.print_board(board_dict)
         current_tile_turn = update_turn(current_tile_turn)
         
-    # end of game, print the winner
+    # end of game, print the winner, prompt game restart
     inputs.print_game_winner(status, winner)
-
-    # restart game? 
-    restart = input("Do you want to play again? (Y/N): ")
-    if inputs.is_user_input_valid_restart(restart):
-        if restart == "Y" or restart == "y":
-            start_game()
+    inputs.prompt_restart()
 
 # RETURNS player's move
 def player_move() -> str:
@@ -79,21 +77,11 @@ def player_move() -> str:
 
 # update whose turn
 # RETURNS: 'X' or 'O' as strings
-# TODO: replace these strings globals
 def update_turn(current_tile_turn: str) -> str:
-    if current_tile_turn =='X':
-        current_tile_turn = 'O'
-    else:
-        current_tile_turn = 'X'
-    return current_tile_turn
+    if current_tile_turn == player_tile:
+        return bot_tile
+    return player_tile
 
-# kick things off
+# this is the driver
 if __name__ == "__main__":
-    # game_type will be either 1 or 2
-    game_type = inputs.get_user_input_game_type()
-
-    if game_type == 1:
-        print("Let's start a user vs. computer game!")
-        start_game()
-    elif game_type == 2:
-        print("UNDER CONSTRUCTION")
+    inputs.start_prompt()
