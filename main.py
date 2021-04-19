@@ -34,12 +34,11 @@ def start_game() -> None:
         # initialize
         current_move_spot = ''
 
-        # user input
+        # get move from whoever's turn it is
         if current_tile_turn == computer_logic.player_tile:
             current_move_spot = player_move()
-        # computer input
         else:
-            current_move_spot = computer_logic.central_computer_logic_move(board_dict, current_tile_turn)
+            current_move_spot = computer_logic.central_computer_logic_move(board_dict)
 
         # sanitize user input and skip iteration ad hoc
         # TODO: re-evaluate this logic. Only needs to be run for player input
@@ -61,7 +60,7 @@ def start_game() -> None:
         
         # show board, update turn
         if current_tile_turn == computer_logic.comp_tile:
-            print("Computer (O) has made a move.")
+            print("Computer (O) has made a move to tile " + current_move_spot + ".")
         board.print_board(board_dict)
         current_tile_turn = update_turn(current_tile_turn)
         

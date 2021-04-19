@@ -14,29 +14,21 @@ import api_calls
 
 # takes either X or O and returns the winner
 def check_for_winner(board: dict, tile: str) -> bool:
-    # across the top
-    if board['7'] == board['8'] == board['9'] == tile: 
+    if board['7'] == board['8'] and board['7'] == board['9'] and board['7'] == tile:
         return True
-    # across the middle
-    elif board['4'] == board['5'] == board['6'] == tile: 
+    elif board['4'] == board['5'] and board['4'] == board['6'] and board['4'] == tile:
         return True
-    # across the bottom
-    elif board['1'] == board['2'] == board['3'] == tile: 
+    elif board['1'] == board['2'] and board['1'] == board['3'] and board['1'] == tile:
         return True
-    # down the left side
-    elif board['1'] == board['4'] == board['7'] == tile: 
+    elif board['7'] == board['4'] and board['7'] == board['1'] and board['7'] == tile:
         return True
-    # down the middle
-    elif board['2'] == board['5'] == board['8'] == tile: 
+    elif board['8'] == board['5'] and board['8'] == board['2'] and board['8'] == tile:
         return True
-    # down the right side
-    elif board['3'] == board['6'] == board['9'] == tile: 
-        return True 
-    # diagonal
-    elif board['7'] == board['5'] == board['3'] == tile: 
+    elif board['9'] == board['6'] and board['9'] == board['3'] and board['9'] == tile:
         return True
-    # diagonal
-    elif board['1'] == board['5'] == board['9'] == tile: 
+    elif board['7'] == board['5'] and board['7'] == board['3'] and board['7'] == tile:
+        return True
+    elif board['1'] == board['5'] and board['1'] == board['9'] and board['1'] == tile:
         return True
     return False
 

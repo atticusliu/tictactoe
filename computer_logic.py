@@ -7,14 +7,14 @@ player_tile = 'X'
 empty_tile = ' '
 
 # MINIMAX logic will drive the computer
-def central_computer_logic_move(board_dict: dict, x: str) -> str:
-    best_score = -1000
+def central_computer_logic_move(board_dict: dict) -> str:
+    best_score = -800
     best_move = 0
 
     # go through each open space and determine scores
     for current_spot in board_dict:
-        if board.is_space_free(board_dict, current_spot):
-            board_dict[current_spot] = x
+        if board_dict[current_spot] == empty_tile:
+            board_dict[current_spot] = comp_tile
             score = minimax(board_dict, 0, False)
             board_dict[current_spot] = empty_tile
 
@@ -24,43 +24,43 @@ def central_computer_logic_move(board_dict: dict, x: str) -> str:
 
     return str(best_move)
 
+def check_draw(board_dict: dict) -> bool:
+    for current_tile in board_dict:
+        if (board_dict[current_tile] == empty_tile):
+            return False
+    return True
+
 def minimax(board_dict: dict, depth: int, is_maximizing: bool) -> int:
-    is_comp_winner = board.check_for_winner(board_dict, comp_tile)
-    is_player_winner = board.check_for_winner(board_dict, player_tile)
-
-    if is_comp_winner:
+    if board.check_for_winner(board_dict, comp_tile):
         return 1
-    elif is_player_winner:
+    elif board.check_for_winner(board_dict, player_tile):
         return -1
-    # tie scenario
-    elif not is_comp_winner and not is_player_winner:
+    elif check_draw(board_dict):
         return 0
-
-    # check is_maximizing
+  
+    # computer will be the maximized
     if is_maximizing:
-        best_score = -1000
+        best_score = -800
 
-        # go through each open space and determine scores
         for current_spot in board_dict:
-            if board.is_space_free(board_dict, current_spot):
+            if board_dict[current_spot] == empty_tile:
                 board_dict[current_spot] = comp_tile
                 score = minimax(board_dict, depth+1, False)
                 board_dict[current_spot] = empty_tile
 
-                if score > best_score:
-                    best_score = score
+                best_score = max(best_score, score)
         return best_score
+    # player will be the minimized
     else:
-        best_score = 1000
+        best_score = 800
 
         # go through each open space and determine scores
         for current_spot in board_dict:
-            if board.is_space_free(board_dict, current_spot):
+            if board_dict[current_spot] == empty_tile:
                 board_dict[current_spot] = player_tile
                 score = minimax(board_dict, depth+1, True)
                 board_dict[current_spot] = empty_tile
 
-                if score < best_score:
-                    best_score = score
+                best_score = min(best_score, score)
         return best_score
 
