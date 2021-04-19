@@ -3,18 +3,24 @@ import json
 
 # This file holds the methods used to call the APIs provided to me
 
-# server runs locally
+# globals. Also note server runs locally
 base_url = "http://127.0.0.1:5000"
 api_key_str = "api-key"
+key_str = "/key"
+echo_str = "/echo"
+echo_auth_str = echo_str + "/auth"
+game_str = "/game"
+game_str_back = "/game/"
+move_str = "/move"
 
 # calls GET /key
 # RETURNS: API key string or something failure-related
 def get_api_key() -> str:
     # get an API key via text
     try:
-        api_key = requests.get(base_url+"/key")
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
+        api_key = requests.get(base_url + key_str)
+    except:
+        raise SystemExit("Can't connect to server. Sorry. Check back later.")
 
     return api_key
 
@@ -24,9 +30,9 @@ def get_echo(api_key: str) -> str:
     headers = {api_key_str: api_key}
 
     try:
-        echo_response = requests.get(base_url+"/echo", headers=headers)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
+        echo_response = requests.get(base_url + echo_str, headers=headers)
+    except:
+        raise SystemExit("Can't connect to server. Sorry. Check back later.")
 
     return echo_response
 
@@ -37,9 +43,9 @@ def get_echo_auth(api_key: str) -> str:
     headers = {api_key_str: api_key}
 
     try:
-        echo_auth_response = requests.get(base_url+"/echo/auth", headers=headers)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
+        echo_auth_response = requests.get(base_url + echo_auth_str, headers=headers)
+    except:
+        raise SystemExit("Can't connect to server. Sorry. Check back later.")
 
     return echo_auth_response
 
@@ -49,9 +55,9 @@ def post_game_create(api_key: str) -> json:
     headers = {api_key_str: api_key}
 
     try: 
-        game_create_response = requests.post(base_url+"/game", headers=headers)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
+        game_create_response = requests.post(base_url + game_str, headers=headers)
+    except:
+        raise SystemExit("Can't connect to server. Sorry. Check back later.")
 
     return game_create_response
 
@@ -61,9 +67,9 @@ def get_game(api_key: str, game_id: str) -> json:
     headers = {api_key_str: api_key}
 
     try:
-        get_game_response = requests.get(base_url+"/game/"+game_id, headers=headers)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
+        get_game_response = requests.get(base_url + game_str_back + game_id, headers=headers)
+    except:
+        raise SystemExit("Can't connect to server. Sorry. Check back later.")
     
     return get_game_response
 
@@ -71,11 +77,12 @@ def get_game(api_key: str, game_id: str) -> json:
 # RETURNS: JSON with game_id, winner, status, gameboard
 def make_move(api_key: str, game_id: str, x: str, y: str, tile:str) -> json:
     headers = {api_key_str: api_key}
+    # can make these strings global as well
     url_query_string = "?x="+x+"&y="+y+"&tile="+tile
     
     try:
-        put_game_move_response = requests.put(base_url+"/game/"+game_id+"/move"+url_query_string, headers=headers)
-    except requests.exceptions.RequestException as e:
-        raise SystemExit(e)
+        put_game_move_response = requests.put(base_url + game_str_back + game_id+ move_str + url_query_string, headers=headers)
+    except:
+        raise SystemExit("Can't connect to server. Sorry. Check back later.")
     
     return put_game_move_response

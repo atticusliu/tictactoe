@@ -1,6 +1,7 @@
 import api_calls
 
 # this file holds all things related to authentication
+game_id_str = 'game_id'
 
 # setup and go through auth
 # RETURNS: api_key, game_id tuple
@@ -23,6 +24,6 @@ def set_up_and_auth_new_game() -> tuple:
     post_game_create_response = api_calls.post_game_create(api_key).json()
 
     # fetch game_id, status from the JSON above
-    game_id = post_game_create_response['game_id']
+    game_id = post_game_create_response[game_id_str]
 
     return api_key, game_id

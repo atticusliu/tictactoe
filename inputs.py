@@ -48,7 +48,7 @@ def is_user_input_valid_restart(user_input: str) -> bool:
 def get_user_input_game_type() -> int:
     print("Welcome to a game of TicTacToe!\n")
     prompt = "Do you want to play against the computer? (1)\nOr watch an AI play against the computer? (2)\n"
-    on_validation_error = "ERROR: Invalid input. Please type either 1 or 2.\n"
+    on_validation_error = "ERROR: Please type either 1 or 2.\n"
     while True:
         value = input(prompt)
 
@@ -75,6 +75,10 @@ def print_game_winner(status: str, winner: str) -> None:
 # RETURNS: None
 def prompt_restart() -> None:
     restart = input("Do you want to play again? (Y/N): ")
-    if is_user_input_valid_restart(restart):
+    while is_user_input_valid_restart(restart):
         if restart == "Y" or restart == "y":
             start_prompt()
+        elif restart == "N" or restart == "n":
+            exit()
+        else:
+            restart = input("Try again with Y/N: ")

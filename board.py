@@ -1,5 +1,6 @@
 import requests
 import api_calls
+import game
 
 # This file holds all operations related to the board 
 
@@ -66,11 +67,10 @@ def get_x_y_from_tile(tile: str) -> tuple:
     
     return index_x_y_dict[tile]
 
-# RETURNS if space is free
-def is_space_free(board_dict, tile: str) -> bool:
-    if board_dict[tile] == ' ':
-        return True
-    return False
+# RETURNS if tile is free
+def is_tile_free(board_dict: dict, tile: str) -> bool:
+    return board_dict[tile] == game.open_tile
+
 
 # RETURNS if input is between 1-9 inclusive
 def is_tile_valid(tile: int) -> bool:

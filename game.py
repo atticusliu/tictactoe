@@ -7,26 +7,31 @@ import board
 import inputs
 import bot
 
-# some globals
+# globals
 bot_tile = 'O'
 player_tile = 'X'
+open_tile = ' '
+empty_str = ''
+active_status = 'ACTIVE'
+winner_str = 'winner'
+status_str = 'status'
 
 # This file holds the guts of the program
 
 # actual game mechanics
 def start_game() -> None:
     board_dict = {
-        '7': ' ', '8': ' ', '9': ' ',
-        '4': ' ', '5': ' ', '6': ' ',
-        '1': ' ', '2': ' ', '3': ' '
+        '7': open_tile, '8': open_tile, '9': open_tile,
+        '4': open_tile, '5': open_tile, '6': open_tile,
+        '1': open_tile, '2': open_tile, '3': open_tile
     }
     
     # setup new game and verify echo API responses return OK
     api_key, game_id = auth.set_up_and_auth_new_game()
 
     # new game status is NONE, but I'm gonna overwrite it to "Active". Initialize winner, start game with X (player)
-    status = 'ACTIVE'
-    winner = ''
+    status = active_status
+    winner = empty_str
     current_tile_turn = player_tile
 
     # print text, board before start of game
@@ -34,9 +39,9 @@ def start_game() -> None:
     board.print_board(board_dict)
 
     # use game status
-    while status == 'ACTIVE':
+    while status == active_status:
         # initialize
-        current_move_tile = ''
+        current_move_tile = empty_str
 
         # get move from whoever's turn it is
         if current_tile_turn == player_tile:
@@ -46,19 +51,20 @@ def start_game() -> None:
 
         # sanitize user input and skip iteration ad hoc
         if not inputs.is_user_input_valid_ints(current_move_tile) or not board.is_tile_valid(int(current_move_tile)):
-            print("Invalid input. Please try again.")
+            print("Try again with numbers 1-9 inclusive.")
             continue
-        elif not board.is_space_free(board_dict, current_move_tile):
+        elif not board.is_tile_free(board_dict, current_move_tile):
             print("Tile has been taken. Please try again.")
             continue
-        else:
-            board_dict[current_move_tile] = current_tile_turn
+        
+        # successful user input, make API call for make_move
+        board_dict[current_move_tile] = current_tile_turn
+        x, y = board.get_x_y_from_tile(current_move_tile)
+        make_move_response = api_calls.make_move(api_key, game_id, x, y, current_tile_turn).json()
 
-            x, y = board.get_x_y_from_tile(current_move_tile)
-            make_move_response = api_calls.make_move(api_key, game_id, x, y, current_tile_turn).json()
-            # update things after each successful move
-            winner = make_move_response['winner']
-            status = make_move_response['status']
+        # update things after each successful move
+        winner = make_move_response[winner_str]
+        status = make_move_response[status_str]
         
         # show board, update turn
         if current_tile_turn == bot_tile:

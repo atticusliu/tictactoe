@@ -1,9 +1,6 @@
 import board
 import game
 
-# global
-empty_tile = ' '
-
 # this file holds all logic related to the bot
 
 # RETURNS: string of the best possible move for the computer
@@ -13,10 +10,10 @@ def get_best_bot_move(board_dict: dict) -> str:
 
     # go through each open space and determine scores
     for current_tile in board_dict:
-        if board_dict[current_tile] == empty_tile:
+        if board.is_tile_free(board_dict, current_tile):
             board_dict[current_tile] = game.bot_tile
             score = minimax(board_dict, 0, False)
-            board_dict[current_tile] = empty_tile
+            board_dict[current_tile] = game.open_tile
 
             if score > best_score:
                 best_score = score
@@ -27,7 +24,7 @@ def get_best_bot_move(board_dict: dict) -> str:
 # RETURNS bool if there's a draw
 def check_draw(board_dict: dict) -> bool:
     for current_tile in board_dict:
-        if (board_dict[current_tile] == empty_tile):
+        if board.is_tile_free(board_dict, current_tile):
             return False
     return True
 
@@ -46,10 +43,10 @@ def minimax(board_dict: dict, depth: int, is_maximizing: bool) -> int:
         best_score = -800
 
         for current_tile in board_dict:
-            if board_dict[current_tile] == empty_tile:
+            if board.is_tile_free(board_dict, current_tile):
                 board_dict[current_tile] = game.bot_tile
                 score = minimax(board_dict, depth+1, False)
-                board_dict[current_tile] = empty_tile
+                board_dict[current_tile] = game.open_tile
 
                 best_score = max(best_score, score)
         return best_score
@@ -59,10 +56,10 @@ def minimax(board_dict: dict, depth: int, is_maximizing: bool) -> int:
 
         # go through each open space and determine scores
         for current_tile in board_dict:
-            if board_dict[current_tile] == empty_tile:
+            if board.is_tile_free(board_dict, current_tile):
                 board_dict[current_tile] = game.player_tile
                 score = minimax(board_dict, depth+1, True)
-                board_dict[current_tile] = empty_tile
+                board_dict[current_tile] = game.open_tile
 
                 best_score = min(best_score, score)
         return best_score
