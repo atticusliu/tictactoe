@@ -1,5 +1,5 @@
 import board
-import main
+import game
 
 # this file holds all methods relatd to user inputs
 
@@ -12,11 +12,11 @@ def start_prompt() -> None:
 
     if game_type == 1:
         print("Let's start a user vs. computer game!")
-        main.start_game()
+        game.start_game()
     elif game_type == 2:
         print("UNDER CONSTRUCTION")
         #print("Let's watch an AI vs computer game!")
-        #main.start_game()
+        #game.start_game()
 
 # prints out sample board for user
 # RETURNS: None

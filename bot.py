@@ -1,5 +1,8 @@
 import board
-import main
+import game
+
+# global
+empty_tile = ' '
 
 # this file holds all logic related to the bot
 
@@ -10,10 +13,10 @@ def get_best_bot_move(board_dict: dict) -> str:
 
     # go through each open space and determine scores
     for current_tile in board_dict:
-        if board_dict[current_tile] == main.empty_tile:
-            board_dict[current_tile] = main.bot_tile
+        if board_dict[current_tile] == empty_tile:
+            board_dict[current_tile] = game.bot_tile
             score = minimax(board_dict, 0, False)
-            board_dict[current_tile] = main.empty_tile
+            board_dict[current_tile] = empty_tile
 
             if score > best_score:
                 best_score = score
@@ -24,16 +27,16 @@ def get_best_bot_move(board_dict: dict) -> str:
 # RETURNS bool if there's a draw
 def check_draw(board_dict: dict) -> bool:
     for current_tile in board_dict:
-        if (board_dict[current_tile] == main.empty_tile):
+        if (board_dict[current_tile] == empty_tile):
             return False
     return True
 
 # recursively go and find the best move
 # RETURNS: the tile of the best move
 def minimax(board_dict: dict, depth: int, is_maximizing: bool) -> int:
-    if board.check_for_winner(board_dict, main.bot_tile):
+    if board.check_for_winner(board_dict, game.bot_tile):
         return 1
-    elif board.check_for_winner(board_dict, main.player_tile):
+    elif board.check_for_winner(board_dict, game.player_tile):
         return -1
     elif check_draw(board_dict):
         return 0
@@ -43,10 +46,10 @@ def minimax(board_dict: dict, depth: int, is_maximizing: bool) -> int:
         best_score = -800
 
         for current_tile in board_dict:
-            if board_dict[current_tile] == main.empty_tile:
-                board_dict[current_tile] = main.bot_tile
+            if board_dict[current_tile] == empty_tile:
+                board_dict[current_tile] = game.bot_tile
                 score = minimax(board_dict, depth+1, False)
-                board_dict[current_tile] = main.empty_tile
+                board_dict[current_tile] = empty_tile
 
                 best_score = max(best_score, score)
         return best_score
@@ -56,10 +59,10 @@ def minimax(board_dict: dict, depth: int, is_maximizing: bool) -> int:
 
         # go through each open space and determine scores
         for current_tile in board_dict:
-            if board_dict[current_tile] == main.empty_tile:
-                board_dict[current_tile] = main.player_tile
+            if board_dict[current_tile] == empty_tile:
+                board_dict[current_tile] = game.player_tile
                 score = minimax(board_dict, depth+1, True)
-                board_dict[current_tile] = main.empty_tile
+                board_dict[current_tile] = empty_tile
 
                 best_score = min(best_score, score)
         return best_score
