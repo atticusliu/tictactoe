@@ -1,7 +1,7 @@
 import board
 import game
 
-# this file holds all methods relatd to user inputs
+# this module holds all methods relatd to user inputs
 
 # start prompt asking the user to choose the type of game that'll be played
 # pretty major driver of logic, too

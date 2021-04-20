@@ -2,7 +2,7 @@ import requests
 import api_calls
 import game
 
-# This file holds all operations related to the board 
+# This module holds all operations related to the board 
 
 
 # board dictionary laid out like a numberpad:
@@ -69,8 +69,7 @@ def get_x_y_from_tile(tile: str) -> tuple:
 
 # RETURNS if tile is free
 def is_tile_free(board_dict: dict, tile: str) -> bool:
-    return board_dict[tile] == game.open_tile
-
+    return board_dict[tile] == game.OPEN_TILE
 
 # RETURNS if input is between 1-9 inclusive
 def is_tile_valid(tile: int) -> bool:
