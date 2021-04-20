@@ -112,7 +112,8 @@ def make_move(api_key: str, game_id: str, x: str, y: str, tile:str) -> json:
     url_query_string = "?x="+x+"&y="+y+"&tile="+tile
     
     try:
-        put_game_move_response = requests.put(BASE_URL + GAME_STR_BACK + game_id+ MOVE_STR + url_query_string, headers=headers)
+        put_game_move_response = (requests.put(BASE_URL + GAME_STR_BACK + game_id +
+        MOVE_STR + url_query_string, headers=headers))
     except requests.exceptions.Timeout:
         print("Request timed out. Please try again.")
     except requests.exceptions.TooManyRedirects:

@@ -29,7 +29,8 @@ def start_game() -> None:
     # setup new game and verify echo API responses return OK
     api_key, game_id = auth.set_up_and_auth_new_game()
 
-    # new game status is NONE, but I'm gonna overwrite it to "Active". Initialize winner, start game with X (player)
+    # new game status is NONE, but I'm gonna overwrite it to "Active"
+    # Initialize winner, start game with X (player)
     status = ACTIVE_STATUS
     winner = EMPTY_STR
     current_tile_turn = PLAYER_TILE
@@ -50,7 +51,8 @@ def start_game() -> None:
             current_move_tile = bot.get_best_bot_move(board_dict)
 
         # sanitize user input and skip iteration ad hoc
-        if not inputs.is_user_input_valid_ints(current_move_tile) or not board.is_tile_valid(int(current_move_tile)):
+        if (not inputs.is_user_input_valid_ints(current_move_tile) or
+         not board.is_tile_valid(int(current_move_tile))):
             print("Try again with numbers 1-9 inclusive.")
             continue
         elif not board.is_tile_free(board_dict, current_move_tile):

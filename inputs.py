@@ -14,14 +14,13 @@ def start_prompt() -> None:
         print("Let's start a user vs. computer game!")
         game.start_game()
     elif game_type == 2:
-        print("UNDER CONSTRUCTION")
-        #print("Let's watch an AI vs computer game!")
-        #game.start_game()
+        print("Sorry, this option not available yet.")
 
 # prints out sample board for user
 # RETURNS: None
 def print_game_start_text() -> None:
-    print("For your reference, this is what your input will look like: 1-9 like a numpad.")
+    print("For your reference, this is what your "
+    "input will look like: 1-9 like a numpad.")
     board.print_index_board()
     print("\n\n")
 
@@ -38,7 +37,8 @@ def is_user_input_valid_ints(user_input: str) -> bool:
 # RETURNS: bool if Y/y/N/n
 def is_user_input_valid_restart(user_input: str) -> bool:
     try:
-        user_input == "y" or user_input == "Y" or user_input == "n" or user_input == "N"
+        (user_input == "y" or user_input == "Y" or
+         user_input == "n" or user_input == "N")
     except ValueError:
         return False
     return True
@@ -47,12 +47,14 @@ def is_user_input_valid_restart(user_input: str) -> bool:
 # RETURNS: 1 or 2
 def get_user_input_game_type() -> int:
     print("Welcome to a game of TicTacToe!\n")
-    prompt = "Do you want to play against the computer? (1)\nOr watch an AI play against the computer? (2)\n"
+    prompt = ("Do you want to play against the computer? (1)\n"
+    "Or watch an AI play against the computer? (2)\n")
     on_validation_error = "ERROR: Please type either 1 or 2.\n"
     while True:
         value = input(prompt)
 
-        if is_user_input_valid_ints(value) and (int(value) == 1 or int(value) == 2):
+        if (is_user_input_valid_ints(value) and
+         (int(value) == 1 or int(value) == 2)):
             return int(value)
         print(on_validation_error)
 
