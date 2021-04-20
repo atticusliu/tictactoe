@@ -1,6 +1,6 @@
 import requests
 import json
-# I got a feeling these imports are NOT preferable
+
 import api_calls
 import auth
 import board
@@ -19,6 +19,8 @@ STATUS_STR = 'status'
 # This module holds the guts of the program
 
 # actual game mechanics
+# ARGS: None
+# RETURNS: None
 def start_game() -> None:
     board_dict = {
         '7': OPEN_TILE, '8': OPEN_TILE, '9': OPEN_TILE,
@@ -79,6 +81,7 @@ def start_game() -> None:
     inputs.prompt_restart()
 
 # update whose turn
+# ARGS: current tile turn (str)
 # RETURNS: 'X' or 'O' as strings
 def update_turn(current_tile_turn: str) -> str:
     if current_tile_turn == PLAYER_TILE:

@@ -4,7 +4,6 @@ import game
 
 # This module holds all operations related to the board 
 
-
 # board dictionary laid out like a numberpad:
 # 7  8  9
 # 4  5  6
@@ -14,6 +13,8 @@ import game
 # (2, 0) = 1, (2, 1) = 2, (2, 2) = 3
 
 # takes either X or O and returns the winner
+# ARGS: board (dict), whose turn (str)
+# RETURNS: bool
 def check_for_winner(board: dict, tile: str) -> bool:
     if board['7'] == board['8'] and board['7'] == board['9'] and board['7'] == tile:
         return True
@@ -34,6 +35,7 @@ def check_for_winner(board: dict, tile: str) -> bool:
     return False
 
 # prints the board complete with what user input should look like
+# ARGS: None
 # RETURNS: None
 def print_index_board() -> None:
     print('7' + '|' + '8' + '|' + '9')
@@ -43,6 +45,7 @@ def print_index_board() -> None:
     print('1' + '|' + '2' + '|' + '3')
 
 # prints current board
+# ARGS: board (dict)
 # RETURNS: None
 def print_board(board: dict) -> None:
     print(board['7'] + '|' + board['8'] + '|' + board['9'])
@@ -51,6 +54,8 @@ def print_board(board: dict) -> None:
     print('-+-+-')
     print(board['1'] + '|' + board['2'] + '|' + board['3'])
 
+# for a given tile, return the coordinates for use in api_calls
+# ARGS: current tile (str)
 # RETURNS: (x, y) as strings in a tuple
 def get_x_y_from_tile(tile: str) -> tuple:
     index_x_y_dict = {
@@ -67,10 +72,14 @@ def get_x_y_from_tile(tile: str) -> tuple:
     
     return index_x_y_dict[tile]
 
-# RETURNS if tile is free
-def is_tile_free(board_dict: dict, tile: str) -> bool:
-    return board_dict[tile] == game.OPEN_TILE
+# quick method to return if a tile is free
+# ARGS: board (dict)
+# RETURNS: bool
+def is_tile_free(board: dict, tile: str) -> bool:
+    return board[tile] == game.OPEN_TILE
 
-# RETURNS if input is between 1-9 inclusive
+# quick method to return if user input as int is between 1-9 inclusive
+# ARGS: tile (int)
+# RETURNS: bool
 def is_tile_valid(tile: int) -> bool:
     return tile >= 1 and tile <= 9

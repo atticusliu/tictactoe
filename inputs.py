@@ -5,6 +5,7 @@ import game
 
 # start prompt asking the user to choose the type of game that'll be played
 # pretty major driver of logic, too
+# ARGS: None
 # RETURNS: None
 def start_prompt() -> None:
     # game_type will be either 1 or 2
@@ -17,6 +18,7 @@ def start_prompt() -> None:
         print("Sorry, this option not available yet.")
 
 # prints out sample board for user
+# ARGS: None
 # RETURNS: None
 def print_game_start_text() -> None:
     print("For your reference, this is what your "
@@ -25,6 +27,7 @@ def print_game_start_text() -> None:
     print("\n\n")
 
 # verifies user input can be cast to int 
+# ARGS: user_input (str)
 # RETURNS: True if valid input, False if otherwise
 def is_user_input_valid_ints(user_input: str) -> bool:
     try:
@@ -34,6 +37,7 @@ def is_user_input_valid_ints(user_input: str) -> bool:
     return True
 
 # makes sure that user input is Y/y/N/n for game restart
+# ARGS: user_input (str)
 # RETURNS: bool if Y/y/N/n
 def is_user_input_valid_restart(user_input: str) -> bool:
     try:
@@ -44,6 +48,7 @@ def is_user_input_valid_restart(user_input: str) -> bool:
     return True
 
 # prompts the user for choice of game with error handling
+# ARGS: None
 # RETURNS: 1 or 2
 def get_user_input_game_type() -> int:
     print("Welcome to a game of TicTacToe!\n")
@@ -58,11 +63,14 @@ def get_user_input_game_type() -> int:
             return int(value)
         print(on_validation_error)
 
-# RETURNS player's move
+# get player input
+# ARGS: None
+# RETURNS: str
 def player_move() -> str:
     return input("It is your (X)'s turn. Make a move: Enter 1-9 (inclusive): ")
 
-# handle game outcome
+# handles game outcome
+# ARGS: status (str), winner (str)
 # RETURNS: None
 def print_game_winner(status: str, winner: str) -> None:
     if status == "COMPLETE":
@@ -74,6 +82,7 @@ def print_game_winner(status: str, winner: str) -> None:
         print("Hmm, the game status should be complete, but isn't. Sorry.")
 
 # handles game restart logic
+# ARGS: None
 # RETURNS: None
 def prompt_restart() -> None:
     restart = input("Do you want to play again? (Y/N): ")

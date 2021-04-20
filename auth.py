@@ -9,7 +9,8 @@ ECHO_RESPONSE_ERROR_MESSAGE = "Echo response is not OK. Quitting."
 ECHO_AUTH_RESPONSE_ERROR_MESSAGE = "Echo auth response is not Auth OK. Quitting."
 
 # setup and go through auth
-# RETURNS: api_key, game_id tuple
+# ARGS: None
+# RETURNS: (api_key (str), game_id (str)) tuple
 def set_up_and_auth_new_game() -> tuple:
     # fetch API key
     api_key = api_calls.get_api_key().text

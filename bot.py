@@ -3,6 +3,8 @@ import game
 
 # this module holds all logic related to the bot
 
+# top-level method to fetch best bot move recursively via minimax
+# ARGS: board_dict (dict)
 # RETURNS: string of the best possible move for the computer
 def get_best_bot_move(board_dict: dict) -> str:
     best_score = -800
@@ -21,7 +23,9 @@ def get_best_bot_move(board_dict: dict) -> str:
 
     return str(best_move)
 
-# RETURNS bool if there's a draw
+# quick method to check for a draw
+# ARGS: board_dict (dict)
+# RETURNS: bool
 def check_draw(board_dict: dict) -> bool:
     for current_tile in board_dict:
         if board.is_tile_free(board_dict, current_tile):
@@ -29,7 +33,8 @@ def check_draw(board_dict: dict) -> bool:
     return True
 
 # recursively go and find the best move
-# RETURNS: the tile of the best move
+# ARGS: board_dict (dict), depth (int), is_maximizing (bool)
+# RETURNS: int
 def minimax(board_dict: dict, depth: int, is_maximizing: bool) -> int:
     if board.check_for_winner(board_dict, game.BOT_TILE):
         return 1
