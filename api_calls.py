@@ -21,11 +21,11 @@ def get_api_key() -> str:
     try:
         api_key = requests.get(BASE_URL + KEY_STR)
     except requests.exceptions.Timeout:
-        print("Request timed out. Please try again")
+        print("Request timed out. Please try again.")
     except requests.exceptions.TooManyRedirects:
         print("URL may be an issue, so please try a different one.")
     except requests.ConnectionError:
-        raise SystemExit(CONNECTION_ERROR_MESSAGE)
+        raise ConnectionError(CONNECTION_ERROR_MESSAGE)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
 
@@ -39,11 +39,11 @@ def get_echo(api_key: str) -> str:
     try:
         echo_response = requests.get(BASE_URL + ECHO_STR, headers=headers)
     except requests.exceptions.Timeout:
-        print("Request timed out. Please try again")
+        print("Request timed out. Please try again.")
     except requests.exceptions.TooManyRedirects:
         print("URL may be an issue, so please try a different one.")
     except requests.ConnectionError:
-        raise SystemExit(CONNECTION_ERROR_MESSAGE)
+        raise ConnectionError(CONNECTION_ERROR_MESSAGE)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
 
@@ -58,11 +58,11 @@ def get_echo_auth(api_key: str) -> str:
     try:
         echo_auth_response = requests.get(BASE_URL + ECHO_AUTH_STR, headers=headers)
     except requests.exceptions.Timeout:
-        print("Request timed out. Please try again")
+        print("Request timed out. Please try again.")
     except requests.exceptions.TooManyRedirects:
         print("URL may be an issue, so please try a different one.")
     except requests.ConnectionError:
-        raise SystemExit(CONNECTION_ERROR_MESSAGE)
+        raise ConnectionError(CONNECTION_ERROR_MESSAGE)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
 
@@ -76,11 +76,11 @@ def post_game_create(api_key: str) -> json:
     try: 
         game_create_response = requests.post(BASE_URL + GAME_STR, headers=headers)
     except requests.exceptions.Timeout:
-        print("Request timed out. Please try again")
+        print("Request timed out. Please try again.")
     except requests.exceptions.TooManyRedirects:
         print("URL may be an issue, so please try a different one.")
     except requests.ConnectionError:
-        raise SystemExit(CONNECTION_ERROR_MESSAGE)
+        raise ConnectionError(CONNECTION_ERROR_MESSAGE)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
 
@@ -94,11 +94,11 @@ def get_game(api_key: str, game_id: str) -> json:
     try:
         get_game_response = requests.get(BASE_URL + GAME_STR_BACK + game_id, headers=headers)
     except requests.exceptions.Timeout:
-        print("Request timed out. Please try again")
+        print("Request timed out. Please try again.")
     except requests.exceptions.TooManyRedirects:
         print("URL may be an issue, so please try a different one.")
     except requests.ConnectionError:
-        raise SystemExit(CONNECTION_ERROR_MESSAGE)
+        raise ConnectionError(CONNECTION_ERROR_MESSAGE)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
     
@@ -114,11 +114,11 @@ def make_move(api_key: str, game_id: str, x: str, y: str, tile:str) -> json:
     try:
         put_game_move_response = requests.put(BASE_URL + GAME_STR_BACK + game_id+ MOVE_STR + url_query_string, headers=headers)
     except requests.exceptions.Timeout:
-        print("Request timed out. Please try again")
+        print("Request timed out. Please try again.")
     except requests.exceptions.TooManyRedirects:
         print("URL may be an issue, so please try a different one.")
     except requests.ConnectionError:
-        raise SystemExit(CONNECTION_ERROR_MESSAGE)
+        raise ConnectionError(CONNECTION_ERROR_MESSAGE)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
     
