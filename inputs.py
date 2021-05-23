@@ -15,7 +15,7 @@ def start_prompt() -> None:
         print("Let's start a user vs. computer game!")
         game.start_game()
     elif game_type == 2:
-        print("Sorry, this option not available yet.")
+        print("Goodbye.")
 
 # prints out sample board for user
 # ARGS: None
@@ -52,8 +52,8 @@ def is_user_input_valid_restart(user_input: str) -> bool:
 # RETURNS: 1 or 2
 def get_user_input_game_type() -> int:
     print("Welcome to a game of TicTacToe!\n")
-    prompt = ("Do you want to play against the computer? (1)\n"
-    "Or watch an AI play against the computer? (2)\n")
+    prompt = ("Let's play!? (1)\n"
+    "Quit (2)\n")
     on_validation_error = "ERROR: Please type either 1 or 2.\n"
     while True:
         value = input(prompt)
