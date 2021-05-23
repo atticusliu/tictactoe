@@ -12,25 +12,39 @@ import game
 # (1, 0) = 4, (1, 1) = 5, (1, 2) = 6
 # (2, 0) = 1, (2, 1) = 2, (2, 2) = 3
 
+WINNING_COMBOS = [
+    # across
+    ['7', '8', '9'],
+    ['4', '5', '6'],
+    ['1', '2', '3'],
+    # down
+    ['7', '4', '1'],
+    ['8', '5', '2'],
+    ['9', '6', '3'],
+    # diagonals
+    ['7', '5', '3'], 
+    ['9', '5', '1']
+]
+
 # takes either X or O and returns the winner
 # ARGS: board (dict), whose turn (str)
 # RETURNS: bool
 def check_for_winner(board: dict, tile: str) -> bool:
-    if board['7'] == board['8'] and board['7'] == board['9'] and board['7'] == tile:
-        return True
-    elif board['4'] == board['5'] and board['4'] == board['6'] and board['4'] == tile:
-        return True
-    elif board['1'] == board['2'] and board['1'] == board['3'] and board['1'] == tile:
-        return True
-    elif board['7'] == board['4'] and board['7'] == board['1'] and board['7'] == tile:
-        return True
-    elif board['8'] == board['5'] and board['8'] == board['2'] and board['8'] == tile:
-        return True
-    elif board['9'] == board['6'] and board['9'] == board['3'] and board['9'] == tile:
-        return True
-    elif board['7'] == board['5'] and board['7'] == board['3'] and board['7'] == tile:
-        return True
-    elif board['1'] == board['5'] and board['1'] == board['9'] and board['1'] == tile:
+    for combo in WINNING_COMBOS:
+         if check_for_winner_subroutine(board, tile, combo):
+             return True
+
+    return False
+
+# subroutine of check_for_winner that performs: A == B, B == C (therefore A == C) for a given tile
+# ARGS: board (dict), tile (str), combo (one of the combos from WINNING_COMBOS)
+# RETURNS: bool
+def check_for_winner_subroutine(board: dict, tile: str, combo: list[str]) -> bool:
+    spot0 = combo[0]
+    spot1 = combo[1]
+    spot2 = combo[2]
+
+    if board[spot0] == board[spot1] and board[spot0] == board[spot2] and board[spot0] == tile:
         return True
     return False
 
